@@ -9,37 +9,37 @@
 
     <properties>
         <java.version>17</java.version>
-        <spring-boot.version>3.3.4</spring-boot.version> <!-- Updated to a more recent version -->
-        <springdoc.version>2.1.0</springdoc.version> <!-- Specify the springdoc version -->
+        <spring-boot.version>3.3.4</spring-boot.version>
+        <springdoc.version>2.1.0</springdoc.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring-boot.version}</version> <!-- Use property for version -->
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>${spring-boot.version}</version> <!-- Use property for version -->
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version> <!-- Use a stable MySQL connector version -->
+            <version>8.0.33</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <version>${spring-boot.version}</version> <!-- Use property for version -->
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>${springdoc.version}</version> <!-- Use property for version -->
+            <version>${springdoc.version}</version>
         </dependency>
     </dependencies>
 
@@ -48,6 +48,19 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version> <!-- You can use the latest stable version -->
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <compilerArgs>
+                        <arg>-parameters</arg> <!-- This is where we set the parameters flag -->
+                    </compilerArgs>
+                </configuration>
             </plugin>
         </plugins>
     </build>

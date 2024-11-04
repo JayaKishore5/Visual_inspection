@@ -1,61 +1,81 @@
 package com.example.visualinspectionmodule.entities;
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
+import java.util.Base64;
 
 @Entity
 @Table(name = "visual_inspection_detail")
 public class VisualInspectionDetail {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Assuming you want a generated ID
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "Rail_Id")
+    private String railId;
 
-    @Column(nullable = false)
+    @Column(name = "Heat_No")
     private int heatNo;
 
-    @Column(nullable = false)
+    @Column(name = "Heat_Pass_Status")
     private String heatPassStatus;
 
-    @Column(nullable = false)
-    private BigDecimal actualOfferedLength;
+    @Column(name = "Actual_Offered_Length")
+    private double actualOfferedLength;
 
-    @Column(nullable = false)
-    private BigDecimal acceptLength;
+    @Column(name = "Accept_Length")
+    private double acceptLength;
 
-    @Column(nullable = false)
+    @Column(name = "Accept_No")
     private int acceptNo;
 
-    @Column(nullable = false)
-    private String railClass;
+    @Column(name = "Rail_Class")
+    private String railClass;  // No CHECK constraint in this version
 
+    @Column(name = "Sub_Rail_Id")
     private String subRailId;
-    private String defectCategory;
+
+    @Column(name = "Defect_Category")
+    private String defectCategory;  // No CHECK constraint in this version
+
+    @Column(name = "Defect_Type")
     private String defectType;
-    private BigDecimal defectLocation;
-    private String defectPosition;
-    private BigDecimal rejectionDetails13m;
-    private BigDecimal rejectionDetails12m;
-    private BigDecimal rejectionDetails11m;
-    private BigDecimal rejectionDetails10m;
-    private BigDecimal rejectionDetailsCompLength;
+
+    @Column(name = "Defect_Location")
+    private double defectLocation;
+
+    @Column(name = "Defect_Position")
+    private String defectPosition;  // No CHECK constraint in this version
+
+    @Column(name = "Rejection_Details_13m")
+    private double rejectionDetails13m;
+
+    @Column(name = "Rejection_Details_12m")
+    private double rejectionDetails12m;
+
+    @Column(name = "Rejection_Details_11m")
+    private double rejectionDetails11m;
+
+    @Column(name = "Rejection_Details_10m")
+    private double rejectionDetails10m;
+
+    @Column(name = "Rejection_Details_Comp_Length")
+    private double rejectionDetailsCompLength;
+
+    @Column(name = "Remark")
     private String remark;
 
-    @Lob
+    @Column(name = "Upload")
     private byte[] upload;
 
-    @ManyToOne
-    @JoinColumn(name = "rail_id", nullable = false)
-    private VisualInspectionMaster visualInspectionMaster;
+    @Transient // This field will not be persisted to the database
+    private String uploadBase64;
 
+    // Getters and Setters...
 
-    public Long getId() {
-        return id;
+    public String getRailId() {
+        return railId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRailId(String railId) {
+        this.railId = railId;
     }
 
     public int getHeatNo() {
@@ -74,19 +94,19 @@ public class VisualInspectionDetail {
         this.heatPassStatus = heatPassStatus;
     }
 
-    public BigDecimal getActualOfferedLength() {
+    public double getActualOfferedLength() {
         return actualOfferedLength;
     }
 
-    public void setActualOfferedLength(BigDecimal actualOfferedLength) {
+    public void setActualOfferedLength(double actualOfferedLength) {
         this.actualOfferedLength = actualOfferedLength;
     }
 
-    public BigDecimal getAcceptLength() {
+    public double getAcceptLength() {
         return acceptLength;
     }
 
-    public void setAcceptLength(BigDecimal acceptLength) {
+    public void setAcceptLength(double acceptLength) {
         this.acceptLength = acceptLength;
     }
 
@@ -130,11 +150,11 @@ public class VisualInspectionDetail {
         this.defectType = defectType;
     }
 
-    public BigDecimal getDefectLocation() {
+    public double getDefectLocation() {
         return defectLocation;
     }
 
-    public void setDefectLocation(BigDecimal defectLocation) {
+    public void setDefectLocation(double defectLocation) {
         this.defectLocation = defectLocation;
     }
 
@@ -146,43 +166,43 @@ public class VisualInspectionDetail {
         this.defectPosition = defectPosition;
     }
 
-    public BigDecimal getRejectionDetails13m() {
+    public double getRejectionDetails13m() {
         return rejectionDetails13m;
     }
 
-    public void setRejectionDetails13m(BigDecimal rejectionDetails13m) {
+    public void setRejectionDetails13m(double rejectionDetails13m) {
         this.rejectionDetails13m = rejectionDetails13m;
     }
 
-    public BigDecimal getRejectionDetails12m() {
+    public double getRejectionDetails12m() {
         return rejectionDetails12m;
     }
 
-    public void setRejectionDetails12m(BigDecimal rejectionDetails12m) {
+    public void setRejectionDetails12m(double rejectionDetails12m) {
         this.rejectionDetails12m = rejectionDetails12m;
     }
 
-    public BigDecimal getRejectionDetails11m() {
+    public double getRejectionDetails11m() {
         return rejectionDetails11m;
     }
 
-    public void setRejectionDetails11m(BigDecimal rejectionDetails11m) {
+    public void setRejectionDetails11m(double rejectionDetails11m) {
         this.rejectionDetails11m = rejectionDetails11m;
     }
 
-    public BigDecimal getRejectionDetails10m() {
+    public double getRejectionDetails10m() {
         return rejectionDetails10m;
     }
 
-    public void setRejectionDetails10m(BigDecimal rejectionDetails10m) {
+    public void setRejectionDetails10m(double rejectionDetails10m) {
         this.rejectionDetails10m = rejectionDetails10m;
     }
 
-    public BigDecimal getRejectionDetailsCompLength() {
+    public double getRejectionDetailsCompLength() {
         return rejectionDetailsCompLength;
     }
 
-    public void setRejectionDetailsCompLength(BigDecimal rejectionDetailsCompLength) {
+    public void setRejectionDetailsCompLength(double rejectionDetailsCompLength) {
         this.rejectionDetailsCompLength = rejectionDetailsCompLength;
     }
 
@@ -202,11 +222,14 @@ public class VisualInspectionDetail {
         this.upload = upload;
     }
 
-    public VisualInspectionMaster getVisualInspectionMaster() {
-        return visualInspectionMaster;
+    public String getUploadBase64() {
+        return uploadBase64;
     }
 
-    public void setVisualInspectionMaster(VisualInspectionMaster visualInspectionMaster) {
-        this.visualInspectionMaster = visualInspectionMaster;
+    public void setUploadBase64(String uploadBase64) {
+        this.uploadBase64 = uploadBase64;
+        if (uploadBase64 != null) {
+            this.upload = Base64.getDecoder().decode(uploadBase64);
+        }
     }
 }

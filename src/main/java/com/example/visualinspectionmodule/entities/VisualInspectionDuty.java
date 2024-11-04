@@ -1,67 +1,67 @@
 package com.example.visualinspectionmodule.entities;
 
+import com.example.visualinspectionmodule.compositkey.VisualInspectionDutyId;
 import jakarta.persistence.*;
-import java.sql.Date;
-import java.sql.Timestamp;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "visual_inspection_duty")
+@IdClass(VisualInspectionDutyId.class)
 public class VisualInspectionDuty {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generate a unique ID for each entry
-    @Column(name = "duty_id")
-    private Long dutyId;
-
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "User_Id")
     private String userId;
 
-    @Column(nullable = false)
+    @Id
+    @Column(name = "Duty_Id")
+    private String dutyId;
+
+    @Column(name = "Create_Date", nullable = false)
     private Date createDate;
 
-    @Column(nullable = false)
+    @Column(name = "Shift", nullable = false)
     private String shift;
 
-    @Column(nullable = false)
+    @Column(name = "Mill", nullable = false)
     private String mill;
 
-    @Column(nullable = false)
+    @Column(name = "Line_No", nullable = false)
     private int lineNo;
 
-    @Column(nullable = false)
+    @Column(name = "Rail_Grade", nullable = false)
     private String railGrade;
 
-    @Column(nullable = false)
+    @Column(name = "Rail_Section", nullable = false)
     private String railSection;
 
-    @Column(nullable = false)
+    @Column(name = "Standard_Offered_Length", nullable = false)
     private int standardOfferedLength;
 
-    @Column(nullable = false)
+    @Column(name = "IE_Name_1", nullable = false)
     private String ieName1;
 
+    @Column(name = "IE_Name_2")
     private String ieName2;
+
+    @Column(name = "IE_Name_3")
     private String ieName3;
+
+    @Column(name = "RCL_IE_Name_1")
     private String rclIeName1;
+
+    @Column(name = "RCL_IE_Name_2")
     private String rclIeName2;
 
-    @Column(nullable = false)
-    private Timestamp startTime;
+    @Column(name = "Start_Time", nullable = false)
+    private Date startTime;
 
-    @Column(nullable = false)
-    private Timestamp endTime;
+    @Column(name = "End_Time", nullable = false)
+    private Date endTime;
 
-    @Column(nullable = false)
+    @Column(name = "Shift_Remark", nullable = false)
     private String shiftRemark;
-
-
-    public Long getDutyId() {
-        return dutyId;
-    }
-
-    public void setDutyId(Long dutyId) {
-        this.dutyId = dutyId;
-    }
 
     public String getUserId() {
         return userId;
@@ -69,6 +69,14 @@ public class VisualInspectionDuty {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getDutyId() {
+        return dutyId;
+    }
+
+    public void setDutyId(String dutyId) {
+        this.dutyId = dutyId;
     }
 
     public Date getCreateDate() {
@@ -167,19 +175,19 @@ public class VisualInspectionDuty {
         this.rclIeName2 = rclIeName2;
     }
 
-    public Timestamp getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public Timestamp getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
